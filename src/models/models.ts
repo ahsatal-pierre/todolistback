@@ -1,7 +1,7 @@
 import { RowDataPacket } from "mysql2";
 
 
-export interface Task extends RowDataPacket {
+export interface Task {
     id: string;
     title: string;
     description: string;
@@ -12,3 +12,4 @@ export interface Task extends RowDataPacket {
     Pending = 'pending',
     Completed = 'completed',
   }
+

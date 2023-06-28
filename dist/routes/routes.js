@@ -8,4 +8,5 @@ const controllers_1 = require("../controllers/controllers");
 const router = express_1.default.Router();
 router.post('/', controllers_1.createTask);
 router.get('/', controllers_1.getAllTasks);
+router.get('/:id', controllers_1.getTaskById);
 exports.default = router;
