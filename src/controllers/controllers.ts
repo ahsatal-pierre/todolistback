@@ -31,7 +31,7 @@ export const createTask = async (req: Request, res: Response) => {
     }
   };
 
- export const getAllTasks = async (req: Request, res: Response) => {
+export const getAllTasks = async (req: Request, res: Response) => {
     try {
       const connection = req.db;
       const [results] = await connection.query('SELECT * FROM tasks');
@@ -42,7 +42,7 @@ export const createTask = async (req: Request, res: Response) => {
     }
   };
   
-  export const getTaskById = async (req: Request, res: Response) => {
+export const getTaskById = async (req: Request, res: Response) => {
     const taskId = req.params.id;
   
     try {
@@ -69,7 +69,7 @@ export const createTask = async (req: Request, res: Response) => {
     }
   };
 
-  export const updateTask = async (req: Request, res: Response) => {
+export const updateTask = async (req: Request, res: Response) => {
     const taskId = req.params.id;
     const { title, description, status } = req.body;
   
@@ -98,5 +98,21 @@ export const createTask = async (req: Request, res: Response) => {
     } catch (error) {
       console.error('Error updating task:', error);
       return res.status(500).json({ error: 'Failed to update task.' });
+    }
+  };
+
+export const deleteTask = async (req: Request, res: Response) => {
+    const taskId = req.params.id;
+  
+    try {
+      const [result] = await req.db.query('DELETE FROM tasks WHERE id = ?', [taskId]);
+  
+       if ((result)) {
+        return res.json({ message: 'Task deleted successfully' });
+      } 
+  
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      return res.status(500).json({ error: 'Failed to delete task.' });
     }
   };

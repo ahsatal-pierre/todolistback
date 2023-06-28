@@ -10,4 +10,5 @@ router.post('/', controllers_1.createTask);
 router.get('/', controllers_1.getAllTasks);
 router.get('/:id', controllers_1.getTaskById);
 router.put('/:id', controllers_1.updateTask);
+router.delete('/:id', controllers_1.deleteTask);
 exports.default = router;
