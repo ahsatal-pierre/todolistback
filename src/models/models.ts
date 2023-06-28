@@ -1,6 +1,7 @@
+import { RowDataPacket } from "mysql2";
 
 
-export interface Task {
+export interface Task extends RowDataPacket {
     id: string;
     title: string;
     description: string;
