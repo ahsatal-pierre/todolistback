@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTaskById = exports.getAllTasks = exports.createTask = void 0;
+exports.updateTask = exports.getTaskById = exports.getAllTasks = exports.createTask = void 0;
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, description } = req.body;
     if (!title || !description) {
@@ -71,3 +71,30 @@ const getTaskById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getTaskById = getTaskById;
+const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const taskId = req.params.id;
+    const { title, description, status } = req.body;
+    try {
+        let updatedTitle = title;
+        let updatedDescription = description;
+        let updatedStatus = status;
+        const [existingTask] = yield req.db.query('SELECT * FROM tasks WHERE id = ?', [taskId]);
+        if (!title) {
+            updatedTitle = existingTask[0].title;
+        }
+        if (!description) {
+            updatedDescription = existingTask[0].description;
+        }
+        if (!status) {
+            updatedStatus = existingTask[0].status;
+        }
+        yield req.db.query('UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?', [updatedTitle, updatedDescription, updatedStatus, taskId]);
+        const [updatedTask] = yield req.db.query('SELECT * FROM tasks WHERE id = ?', [taskId]);
+        return res.json(updatedTask[0]);
+    }
+    catch (error) {
+        console.error('Error updating task:', error);
+        return res.status(500).json({ error: 'Failed to update task.' });
+    }
+});
+exports.updateTask = updateTask;

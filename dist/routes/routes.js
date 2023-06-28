@@ -9,4 +9,5 @@ const router = express_1.default.Router();
 router.post('/', controllers_1.createTask);
 router.get('/', controllers_1.getAllTasks);
 router.get('/:id', controllers_1.getTaskById);
+router.put('/:id', controllers_1.updateTask);
 exports.default = router;
