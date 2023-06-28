@@ -53,7 +53,7 @@ export const createTask = async (req: Request, res: Response) => {
       }
   
       const row = (rows[0] as RowDataPacket);
-      console.log("row: ", row);
+     // console.log("row: ", row);
    
        const task: Task = {
         id: row.id.toString(),
@@ -66,5 +66,37 @@ export const createTask = async (req: Request, res: Response) => {
     } catch (error) {
       console.error('Error retrieving task:', error);
       return res.status(500).json({ error: 'Failed to retrieve task.' });
+    }
+  };
+
+  export const updateTask = async (req: Request, res: Response) => {
+    const taskId = req.params.id;
+    const { title, description, status } = req.body;
+  
+    try {
+      let updatedTitle = title;
+      let updatedDescription = description;
+      let updatedStatus = status;
+  
+      const [existingTask] = await req.db.query<RowDataPacket[]>('SELECT * FROM tasks WHERE id = ?', [taskId]);
+  
+      if (!title) {
+        updatedTitle = existingTask[0].title;
+      }
+      if (!description) {
+        updatedDescription = existingTask[0].description;
+      }
+      if (!status) {
+        updatedStatus = existingTask[0].status;
+      }
+  
+      await req.db.query('UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?', [updatedTitle, updatedDescription, updatedStatus, taskId]);
+  
+      const [updatedTask] = await req.db.query<RowDataPacket[]>('SELECT * FROM tasks WHERE id = ?', [taskId]);
+  
+      return res.json(updatedTask[0]);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      return res.status(500).json({ error: 'Failed to update task.' });
     }
   };
