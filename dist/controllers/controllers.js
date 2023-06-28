@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTask = exports.getTaskById = exports.getAllTasks = exports.createTask = void 0;
+exports.deleteTask = exports.updateTask = exports.getTaskById = exports.getAllTasks = exports.createTask = void 0;
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, description } = req.body;
     if (!title || !description) {
@@ -56,7 +56,7 @@ const getTaskById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             return res.status(404).json({ error: 'Task not found' });
         }
         const row = rows[0];
-        console.log("row: ", row);
+        // console.log("row: ", row);
         const task = {
             id: row.id.toString(),
             title: row.title,
@@ -98,3 +98,17 @@ const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateTask = updateTask;
+const deleteTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const taskId = req.params.id;
+    try {
+        const [result] = yield req.db.query('DELETE FROM tasks WHERE id = ?', [taskId]);
+        if ((result)) {
+            return res.json({ message: 'Task deleted successfully' });
+        }
+    }
+    catch (error) {
+        console.error('Error deleting task:', error);
+        return res.status(500).json({ error: 'Failed to delete task.' });
+    }
+});
+exports.deleteTask = deleteTask;
