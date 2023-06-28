@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTask = void 0;
+exports.getAllTasks = exports.createTask = void 0;
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, description } = req.body;
     if (!title || !description) {
@@ -18,7 +18,7 @@ const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const connection = req.db;
         const result = yield connection.query('INSERT INTO tasks (title, description) VALUES (?, ?)', [title, description]);
-        console.log(typeof result); // object
+        console.log(typeof result);
         console.log("result: ", result);
         // const parseresult = JSON.parse(result.insertId)
         const insertId = result[0].insertId;
@@ -36,3 +36,15 @@ const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createTask = createTask;
+const getAllTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const connection = req.db;
+        const [results] = yield connection.query('SELECT * FROM tasks');
+        return res.json(results);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while retrieving tasks.' });
+    }
+});
+exports.getAllTasks = getAllTasks;

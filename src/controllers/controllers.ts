@@ -30,3 +30,15 @@ export const createTask = async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'An error occurred while creating the task.' });
     }
   };
+
+ export const getAllTasks = async (req: Request, res: Response) => {
+    try {
+      const connection = req.db;
+      const [results] = await connection.query('SELECT * FROM tasks');
+      return res.json(results);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'An error occurred while retrieving tasks.' });
+    }
+  };
+  
