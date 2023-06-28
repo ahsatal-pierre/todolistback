@@ -1,0 +1,128 @@
+{
+    "info": {
+    "_postman_id": "e0dd252f-821b-4c03-b915-2c3c49c979ad",
+    "name": "task API SQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "21153224"
+    },
+    "item": [
+    {
+    "name": "Create tasks",
+    "request": {
+    "method": "POST",
+    "header": [],
+    "body": {
+    "mode": "raw",
+    "raw": "{\r\n    \"title\": \"title task 11\",\r\n    \"description\": \"description task 11\"\r\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "http://localhost:3000/tasks/",
+    "protocol": "http",
+    "host": [
+    "localhost"
+    ],
+    "port": "3000",
+    "path": [
+    "tasks",
+    ""
+    ]
+    }
+    },
+    "response": []
+    },
+    {
+    "name": "Get all tasks",
+    "request": {
+    "method": "GET",
+    "header": [],
+    "url": {
+    "raw": "http://localhost:3000/tasks/",
+    "protocol": "http",
+    "host": [
+    "localhost"
+    ],
+    "port": "3000",
+    "path": [
+    "tasks",
+    ""
+    ]
+    }
+    },
+    "response": []
+    },
+    {
+    "name": "Get a Task by id",
+    "request": {
+    "method": "GET",
+    "header": [],
+    "url": {
+    "raw": "http://localhost:3000/tasks/1",
+    "protocol": "http",
+    "host": [
+    "localhost"
+    ],
+    "port": "3000",
+    "path": [
+    "tasks",
+    "1"
+    ]
+    }
+    },
+    "response": []
+    },
+    {
+    "name": "Update a Task",
+    "request": {
+    "method": "PUT",
+    "header": [],
+    "body": {
+    "mode": "raw",
+    "raw": "{\r\n    \"title\": \"Task Title 1\",\r\n    \"description\": \"Task Description 1\",\r\n    \"status\": \"completed\"\r\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "http://localhost:3000/tasks/1",
+    "protocol": "http",
+    "host": [
+    "localhost"
+    ],
+    "port": "3000",
+    "path": [
+    "tasks",
+    "1"
+    ]
+    }
+    },
+    "response": []
+    },
+    {
+    "name": "Delete a Task",
+    "request": {
+    "method": "DELETE",
+    "header": [],
+    "url": {
+    "raw": "http://localhost:3000/tasks/1",
+    "protocol": "http",
+    "host": [
+    "localhost"
+    ],
+    "port": "3000",
+    "path": [
+    "tasks",
+    "1"
+    ]
+    }
+    },
+    "response": []
+    }
+    ]
+    }
